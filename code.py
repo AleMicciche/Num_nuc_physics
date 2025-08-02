@@ -8,7 +8,7 @@ import math
 
 #set display quality 
 #plt.rcParams['savefig.dpi'] = 300
-#plt.rcParams['figure.dpi'] = 150
+#plt.rcParams['figure.dpi'] = 180
 
 #initialize the grid in the variable x(r), r radial coordinate
 def init_grid(N, x_0, dx, Z):

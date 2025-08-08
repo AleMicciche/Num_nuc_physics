@@ -5,10 +5,15 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import sys
 import math
+from scipy.optimize import differential_evolution, minimize
+import inspect
 
 #set display quality 
 #plt.rcParams['savefig.dpi'] = 300
 #plt.rcParams['figure.dpi'] = 180
+
+class ConvergenceError(Exception):
+    pass
 
 #initialize the grid in the variable x(r), r radial coordinate
 def init_grid(N, x_0, dx, Z):
@@ -33,14 +38,15 @@ def init_grid(N, x_0, dx, Z):
 
 
 #save the potential in a .parquet and its plot
-def save_pot(r, pot, low_lim_plot, up_lim_plot, name):
-
+def save_pot(r, pot, low_lim_plot, up_lim_plot, name, title=None):
+    if title is None:
+        title = name
     df_pot = pd.DataFrame({"r": r, "V(r)": pot})
     df_pot.to_parquet(f"{name}/potential.parquet", index = False)
     #print(df_pot)
 
     plt.figure()
-    plt.title(f"{name} potential")
+    plt.title(f"{title} potential")
     plt.plot(r, pot, 'o')
     plt.xlabel("r     (Bohr radii)")
     plt.ylabel("V(r)     (Ry)")
@@ -49,15 +55,15 @@ def save_pot(r, pot, low_lim_plot, up_lim_plot, name):
     plt.savefig(f"{name}/potential.png")
 
 #define the function to solve the readial Schroedinger equation with the potential v_pot
-def solve_schr(N, dx, grid, pot, n, l, Z, i_ph):
+def solve_schr(N, dx, grid, pot, n, l, Z, i_ph, verbose=True):
 
     #assign these values from the defined grid
-    r, sqrt_r, r2= grid
+    r, sqrt_r, r2 = grid
 
     eps = 1e-10 #tolerance threshlod for convergence of the eigenvalue 
-    n_iter = 200 #iterations after the convergence is evaluated
+    n_iter = 1000 #iterations after the convergence is evaluated
 
-    #initial lower and upper bounds to eigenvalue
+    #initial lower and upper bounds for eigenvalue
     eup = pot[N-1]
     elw = eup 
 
@@ -66,7 +72,7 @@ def solve_schr(N, dx, grid, pot, n, l, Z, i_ph):
 
     if (eup - elw < eps):
         print("solve_schr: lower and upper bound in the energy interval searching are equal:", eup, elw)
-        sys.exit(1)
+        raise ConvergenceError("Schroedinger solver did not converge due to bounds.")
     
     e = (eup + elw) * 0.5 
     de = 1e+10 
@@ -180,6 +186,9 @@ def solve_schr(N, dx, grid, pot, n, l, Z, i_ph):
             e = e + de
             e = min(e, eup)
             e = max(e, elw)
+
+            if e == eup: 
+                e = (eup + elw)/2
         
         k += 1
 
@@ -189,12 +198,20 @@ def solve_schr(N, dx, grid, pot, n, l, Z, i_ph):
             print(f"n_cross={n_cross:4d} nodes={nodes:4d} icl={icl:4d} e={e:16.8e} elw={elw:16.8e} eup={eup:16.8e} n={n}")
         else:
             print(f"e={e:16.8e}  de={de:16.8e}")
-        
         print(f"solve_sheq not converged after {n_iter} iterations, n={n}")
-        sys.exit(1)
+        # Print c and d_1 if available in the caller context
+        frame = inspect.currentframe().f_back
+        c = frame.f_locals.get('c', None)
+        d_1 = frame.f_locals.get('d_1', None)
+        if c is not None:
+            print(f"c = {c}")
+        if d_1 is not None:
+            print(f"d_1 = {d_1}")
+        raise ConvergenceError(f"Schroedinger solver did not converge for c={c}, d_1={d_1}")
 
     # ---- convergence has been achieved -----
-    print(f"convergence achieved at iter # {k:4d}, de = {de:16.8e}")
+    if verbose:
+        print(f"convergence achieved at iter # {k:4d}, de = {de:16.8e}")
     
     #compute phase shift at r(x_{i_ph})
     ph_shift = np.arcsin(sqrt_r[i_ph] * y[i_ph]/2) - np.sqrt(np.absolute(e)) * r[i_ph] + (l * np.pi)/2
@@ -202,7 +219,10 @@ def solve_schr(N, dx, grid, pot, n, l, Z, i_ph):
     return e, y, ph_shift
 
 
-def result (N, dx, grid, pot, Z, i_ph, n_max, e_arr, chi_arr, ph_shift_arr, name):
+def result (N, dx, grid, pot, Z, i_ph, n_max, e_arr, chi_arr, ph_shift_arr, name, title = None):
+    
+    if title is None:
+        title = name
     
     #minimal value, l=0 fixed
     n=1
@@ -214,15 +234,15 @@ def result (N, dx, grid, pot, Z, i_ph, n_max, e_arr, chi_arr, ph_shift_arr, name
 
         #save datasets and plot them
         df_chi = pd.DataFrame({"r": grid[0], "chi": chi_arr[i-1]})
-        df_chi.to_parquet(f"{name}/eigenfunctions/eigenfunc_{name}_n_{i}.parquet", index=False)
+        df_chi.to_parquet(f"{name}/eigenfunctions/eigenfunc_n_{i}.parquet", index=False)
 
         plt.figure()
         plt.plot(r, chi_arr[i-1], color = 'blue')
         plt.xlabel("r  (Bohr radii)")
         plt.ylabel(r'$\chi(r) $')
-        plt.title(f"{name} potential eigenfunction n = {i}")
+        plt.title(f"{title} potential - eigenfunction n = {i}")
         plt.grid(True)
-        plt.savefig(f"{name}/eigenfunctions/eigenfunc_{name}_n_{i}.png")
+        plt.savefig(f"{name}/eigenfunctions/eigenfunc_n_{i}.png")
         plt.close()
 
     n_arr = np.arange(1, n_max + 1)
@@ -251,6 +271,7 @@ dx = 0.01 #grid spacing
 Z = 1 #atomic number
 N = int((np.log(Z * r_max) - x_0) / dx)  #number of points on the grid
 grid = init_grid(N, x_0, dx, Z)
+r = grid[0]
 
 #index of the last energy eigenvalue to be computed
 n_max = 20
@@ -261,10 +282,13 @@ i_ph = int(np.floor((np.log(Z * r_ph) - x_0)/dx))
 
 #define Coulomb potential
 name_cou = "Coulomb"
-r = grid[0] 
 pot_cou = -2 * Z / r
 save_pot(r, pot_cou, 0, 0.1, name_cou)
+
 #--------------------------Coulomb potential analysis-----------------------------
+print("\n" + "-"*50)
+print(f"Coulomb theory")
+print("-"*50)
 
 #compute eigenvalues, eigenfunctions, phase shifts
 e_cou = np.zeros(n_max)
@@ -288,16 +312,21 @@ plt.title(f"relative error w.r.t analytical values")
 plt.grid(True)
 plt.xscale("log")
 plt.yscale("log")
-plt.savefig(f"{name_cou}/eigenvalues/relative_error_analytical_result.png")
+plt.savefig(f"plot/relative_error_coulomb_analyt.png")
 plt.show()
 plt.close()
 
 #--------------------------True potential analysis-----------------------------
+print("\n" + "-"*50)
+print(f"Exact theory")
+print("-"*50)
+name_true = "true"
+
+#anti-screening parameter: the inverse of the characteristic length
+b = 1 
 
 #define the true potential: coulomb + anti-screening yukawa-type potential
-name_true = "true"
-a = 0.2 #anti-screening parameter
-pot_true = pot_cou - 2 * Z * (np.exp(- a * r) /r)
+pot_true = pot_cou - 2 * Z * (np.exp(- b * r) /r)
 save_pot(r, pot_true, 0, 0.1, name_true)
 
 #compute eigenvalues, eigenfunctions, phase shifts
@@ -307,15 +336,288 @@ ph_shift = np.zeros(n_max)
 e, chi, ph_shift = result(N, dx, grid, pot_true, Z, i_ph, n_max, e, chi, ph_shift, name_true)
 
 #----------------(first order perturb. th.) delta potential analysis------------------
-#fitting the free paramter c to the lowest eigenvalues E^{true}_{n_max}: the smallest relative error w.r.t. corresponding coulomb eigenvalues
-c = (e[n_max -1] - e_th[n_max -1]) * np.sqrt(np.pi) * n_max**3
+print("\n" + "-"*50)
+print(f"First order perturbation theory analysis")
+print("-"*50)
+#fitting the free paramter k to the lowest eigenvalue |E^{true}_{n_max}|: the smallest relative error w.r.t. corresponding coulomb eigenvalues
+k = (e[n_max -1] - e_th[n_max -1]) * np.sqrt(np.pi) * n_max**3
+print(f"\n Coefficient delta function: k = {k}")
+
 #define the first order prediction for the eigenvalues
 e_delta = np.zeros(n_max) 
 n_arr = np.arange(1, n_max + 1)
-e_delta = e_cou + c / (np.sqrt(np.pi) * n_arr**3)
+e_delta = e_th + k / (np.sqrt(np.pi) * n_arr**3)
+
+#--------------------------Effective potential analysis-----------------------------
+
+#define effective potential with three paramters
+def pot_eff(a, c, d_1):
+    return pot_cou + c * a**2 * (np.exp(- (r**2) / (2 * a**2))) / ((2 * np.pi)**1.5 * a**3) + d_1 * a**4 * (-3 + r**2 / a**2) * (np.exp(- (r**2) / (2 * a**2))) / ((2 * np.pi)**1.5 * a**5)
+
+#load phase shifts from true potential
+# df_ph = pd.read_parquet(f"true/phase/phase_shift_r_{r_ph}.parquet")
+# ph_shift = df_ph["phase shift"].values 
+
+#define function to minimize in order to find c and d
+def objective(params):
+    #handle both cases
+    if len(params) == 1:
+        c = params[0]
+        d_1 = 0
+    else:
+        c, d_1 = params
+    try:
+        _, _, ph_shift_eff_n_max = solve_schr(N, dx, grid, pot_eff(a, c, d_1), n_max, 0, Z, i_ph, verbose=False) 
+        return (ph_shift_eff_n_max - ph_shift[n_max-1])**2
+    except ConvergenceError:
+        return np.inf
+
+##-----------------a = 1 --------------------
+
+# a = 1
+
+# ###-------------a^4 theory-------------------
+
+# #bounds of c and d_1 for optimization alghorithm
+# bounds_a1 = [(-70, -50), (-8, -2)]
+
+# #find zeros of objective function 
+# result_a1 = differential_evolution(objective, bounds_a1, maxiter = 100, popsize = 15)
+# c_opt, d_1_opt = result_a1.x
+# print(f"objective = {objective([c_opt, d_1_opt])}, best parameters for a = {a}: c = {c_opt}, d = {d_1_opt}")
+
+# #set potential with optimal values
+# name_eff_a4_a1 = "eff_a_4/a1"
+# pot_a4_a1 = pot_eff(a, c_opt, d_1_opt)
+# save_pot(r, pot_a4_a1, 0, 0.01, name_eff_a4_a1, "Effective a^4 (a = 1)")
+
+# #compute eigenvalues, eigenfunctions, phase shifts
+# e_a4_a1 = np.zeros(n_max)
+# chi_a4_a1 = np.zeros((n_max, N))
+# ph_shift_a4_a1 = np.zeros(n_max)
+# e_a4_a1, chi_a4_a1, ph_shift_a4_a1 = result(N, dx, grid, pot_a4_a1, Z, i_ph, n_max, e_a4_a1, chi_a4_a1, ph_shift_a4_a1, name_eff_a4_a1)
+
+# ###-------------a^2 theory-------------------
+
+# #bounds of c (d_1 = 0) for optimization alghorithm
+# bounds_a1_0 = [(-60, -40)]
+
+# #find zeros of objective function 
+# result_a1_0 = differential_evolution(objective, bounds_a1_0, maxiter = 100, popsize = 15)
+# c_0_opt = result_a1_0.x[0]
+# print(f"objective = {objective([c_0_opt])}, best parameters for a = {a}: c_0 = {c_0_opt}  (d_1 = 0)")
+
+# #set potential with optimal values
+# name_eff_a2_a1 = "eff_a_2/a1"
+# pot_a2_a1 = pot_eff(a, c_0_opt, 0)
+# save_pot(r, pot_a2_a1, 0, 0.01, name_eff_a2_a1, "Effective a^2 (a = 1)") 
+
+# #compute eigenvalues, eigenfunctions, phase shifts
+# e_a2_a1 = np.zeros(n_max)
+# chi_a2_a1 = np.zeros((n_max, N))
+# ph_shift_a2_a1 = np.zeros(n_max)
+# e_a2_a1, chi_a2_a1, ph_shift_a2_a1 = result(N, dx, grid, pot_a2_a1, Z, i_ph, n_max, e_a2_a1, chi_a2_a1, ph_shift_a2_a1, name_eff_a2_a1)
+# #-----------------a = 3 --------------------
+# #a = 3
+
+# # # # #bounds of c and d_1 for optimization alghorithm
+# #bounds_a3 = [(-50, -30), (-12, -4)]
+# #bounds_a3_0 = [(-40, -20)] #d_1 = 0
+
+# # # # #find zeros of objective function 
+# #result_a3 = differential_evolution(objective, bounds_a3, maxiter = 100, popsize = 15)
+# #result_a1_0 = differential_evolution(objective, bounds_a3_0, maxiter = 100, popsize = 15)
+
+# # c_opt, d_1_opt = result_a3.x
+# # print(f"objective = {objective([c_opt, d_1_opt])}, best parameters for a = {a}: c = {c_opt}, d = {d_1_opt}")
+# #c_0_opt = result_a1_0.x[0]
+# #print(f"objective = {objective([c_0_opt])}, best parameters for a = {a}: c_0 = {c_0_opt}  (d_1 = 0)")
+
+# # init_val_a3 = [-36]
+# # result_a3 =  minimize(objective, init_val_a3)
+# # c_opt = result_a3.x[0]
+# # print(f"objective = {objective([c_opt])}, best parameters for a = {a}: c = {c_opt}")
+# #-----------------a = 10 --------------------
+# #a = 10
+
+# # # #bounds of c and d_1 for optimization alghorithm
+# #bounds_a10 = [(-40, -20), (-15, -4)]
+# #bounds_a10_0 = [(-20, -10)] #d_1 = 0
+
+# # #find zeros of objective function 
+# #result_a10 = differential_evolution(objective, bounds_a10, maxiter = 100, popsize = 15)
+# #result_a10_0 = differential_evolution(objective, bounds_a10_0, maxiter = 100, popsize = 15)
+
+# #c_opt, d_1_opt = result_a10.x
+# #print(f"objective = {objective([c_opt, d_1_opt])}, best parameters for a = {a}: c = {c_opt}, d_1 = {d_1_opt}")
+# #c_0_opt = result_a10_0.x[0]
+# #print(f"objective = {objective([c_0_opt])}, best parameters for a = {a}: c_0 = {c_0_opt} (d_1 = 0)")
+
+# #-----------------a = 10 --------------------
+# a = 0.1
+
+# # # #bounds of c and d_1 for optimization alghorithm
+# #bounds_a01 = [(-160, -140), (-16, -8)]
+# bounds_a01_0 = [(-150, -130)] #d_1 = 0
+
+# #find zeros of objective function 
+# #result_a01 = differential_evolution(objective, bounds_a01, maxiter = 100, popsize = 15)
+# result_a01_0 = differential_evolution(objective, bounds_a01_0, maxiter = 100, popsize = 15)
+
+# # c_opt, d_1_opt = result_a01.x
+# # print(f"objective = {objective([c_opt, d_1_opt])}, best parameters for a = {a}: c = {c_opt}, d_1 = {d_1_opt}")
+# c_0_opt = result_a01_0.x[0]
+# print(f"objective = {objective([c_0_opt])}, best parameters for a = {a}: c_0 = {c_0_opt} (d_1 = 0)")
+
+# List of a values,and useful variables to iteratere over them 
+setting_a_values = [
+    {
+        'a': 1,
+        'bounds_a4': [(-60, -50), (-5, -2)], #a^4 theory: bounds of c and d_1 for optimization alghorithm 
+        'bounds_a2': [(-60, -40)], #a^2 theory: bounds of c (d_1 = 0) for optimization alghorithm
+        'name_a4': 'eff_a_4/a1',
+        'name_a2': 'eff_a_2/a1',
+        'title_a4': 'Effective a^4 (a = 1)',
+        'title_a2': 'Effective a^2 (a = 1)'
+    # },
+    # {
+    #     'a': 3,
+    #     'bounds_a4': [(-50, -30), (-12, -4)],
+    #     'bounds_a2': [(-40, -20)],
+    #     'name_a4': 'eff_a_4/a3',
+    #     'name_a2': 'eff_a_2/a3',
+    #     'title_a4': 'Effective a^4 (a = 3)',
+    #     'title_a2': 'Effective a^2 (a = 3)'
+       
+    # },
+    # {
+    #     'a': 10,
+    #     'bounds_a4': [(-40, -20), (-15, -4)],
+    #     'bounds_a2': [(-20, -10)],
+    #     'name_a4': 'eff_a_4/a10',
+    #     'name_a2': 'eff_a_2/a10',
+    #     'title_a4': 'Effective a^4 (a = 10)',
+    #     'title_a2': 'Effective a^2 (a = 10)'
+    # },
+    # {
+    #     'a': 0.1,
+    #     'bounds_a4': [(-160, -140), (-16, -8)],
+    #     'bounds_a2': [(-150, -130)],
+    #     'name_a4': 'eff_a_4/a01',
+    #     'name_a2': 'eff_a_2/a01',
+    #     'title_a4': 'Effective a^4 (a = 0.1)',
+    #     'title_a2': 'Effective a^2 (a = 0.1)'
+    }
+]
+
+# Prepare lists to collect results for plotting
+e_a4_list = []
+e_a2_list = []
+ph_shift_a4_list = []
+ph_shift_a2_list = []
 
 
-#plot and save the relative difference between true eigenvalues and coulomb ones, and true eigenvalues and those computed from the delta potential
+for set in setting_a_values:
+    
+    print("\n" + "-"*50)
+    print(f"Effective theory: a = {set['a']}")
+    print("-"*50)
+
+    a = set['a']
+    
+    #-------a^4 theory-----------
+     
+    print("\n[ a^4 theory ]")
+    
+    #find zeros of objective function
+    print("\n Optimization algorithm")
+    result_a4 = differential_evolution(objective, set['bounds_a4'], maxiter=100, popsize=15)
+    c_opt, d_1_opt = result_a4.x
+    print(f"\n objective = {objective([c_opt, d_1_opt])}, best parameters for a = {a}: c = {c_opt}, d = {d_1_opt}")
+    
+    #set potential with optimal values
+    pot_a4 = pot_eff(a, c_opt, d_1_opt)
+    save_pot(r, pot_a4, 0, 0.01, set['name_a4'], set['title_a4'])
+
+    #compute eigenfunctions, eigenvalues, phase shifts
+    print("\n Solving Schroedinger equation")
+    e_a4 = np.zeros(n_max)
+    chi_a4 = np.zeros((n_max, N))
+    ph_shift_a4 = np.zeros(n_max)
+    e_a4, chi_a4, ph_shift_a4 = result(N, dx, grid, pot_a4, Z, i_ph, n_max, e_a4, chi_a4, ph_shift_a4, set['name_a4'], set['title_a4'])
+
+    # Store results for plotting
+    e_a4_list.append(e_a4)
+    ph_shift_a4_list.append(ph_shift_a4)
+
+    #-------a^2 theory (d_1 = 0)-------
+    
+    print("\n[ a^2 theory (d_1 = 0) ]")
+
+    #find zeros of objective function
+    print("\n Optimization algorithm")
+    result_a2 = differential_evolution(objective, set['bounds_a2'], maxiter=100, popsize=15)
+    c_0_opt = result_a2.x[0]
+    print(f"\n objective = {objective([c_0_opt])}, best parameters for a = {a}: c_0 = {c_0_opt}  (d_1 = 0)")
+
+    #set potential with optimal values
+    pot_a2 = pot_eff(a, c_0_opt, 0)
+    save_pot(r, pot_a2, 0, 0.1, set['name_a2'], set['title_a2'])
+
+    #compute eigenfunctions, eigenvalues, phase shifts
+    print("\n Solving Schroedinger equation")
+    e_a2 = np.zeros(n_max)
+    chi_a2 = np.zeros((n_max, N))
+    ph_shift_a2 = np.zeros(n_max)
+    e_a2, chi_a2, ph_shift_a2 = result(N, dx, grid, pot_a2, Z, i_ph, n_max, e_a2, chi_a2, ph_shift_a2, set['name_a2'], set['title_a2'])
+
+    # Store results for plotting
+    e_a2_list.append(e_a2)
+    ph_shift_a2_list.append(ph_shift_a2)
+
+
+# df_e_4_a1 = pd.read_parquet("eff_a_4/a1/eigenvalues/eigenvalues.parquet")
+# e_4_a1 = df_e_4_a1["E"].values
+# df_e_2_a1 = pd.read_parquet("eff_a_2/a1/eigenvalues/eigenvalues.parquet")
+# e_2_a1 = df_e_2_a1["E"].values
+
+# df_e_4_a3 = pd.read_parquet("eff_a_4/a3/eigenvalues/eigenvalues.parquet")
+# e_4_a3 = df_e_4_a3["E"].values
+# df_e_2_a3 = pd.read_parquet("eff_a_2/a3/eigenvalues/eigenvalues.parquet")
+# e_2_a3 = df_e_2_a3["E"].values
+
+# df_e_4_a10 = pd.read_parquet("eff_a_4/a10/eigenvalues/eigenvalues.parquet")
+# e_4_a10 = df_e_4_a10["E"].values
+# df_e_2_a10 = pd.read_parquet("eff_a_2/a10/eigenvalues/eigenvalues.parquet")
+# e_2_a10 = df_e_2_a10["E"].values
+
+# df_e_4_a01 = pd.read_parquet("eff_a_4/a01/eigenvalues/eigenvalues.parquet")
+# e_4_a01 = df_e_4_a01["E"].values
+# df_e_2_a01 = pd.read_parquet("eff_a_2/a01/eigenvalues/eigenvalues.parquet")
+# e_2_a01 = df_e_2_a01["E"].values
+
+# df_ph_4_a1 = pd.read_parquet(f"eff_a_4/a1/phase/phase_shift_r_{r_ph}.parquet")
+# ph_shift_4_a1 = df_ph_4_a1["phase shift"].values
+# df_ph_2_a1 = pd.read_parquet(f"eff_a_2/a1/phase/phase_shift_r_{r_ph}.parquet")
+# ph_shift_2_a1 = df_ph_2_a1["phase shift"].values
+
+# df_ph_4_a3 = pd.read_parquet(f"eff_a_4/a3/phase/phase_shift_r_{r_ph}.parquet")
+# ph_shift_4_a3 = df_ph_4_a3["phase shift"].values
+# df_ph_2_a3 = pd.read_parquet(f"eff_a_2/a3/phase/phase_shift_r_{r_ph}.parquet")
+# ph_shift_2_a3 = df_ph_2_a3["phase shift"].values
+
+# df_ph_4_a10 = pd.read_parquet(f"eff_a_4/a10/phase/phase_shift_r_{r_ph}.parquet")
+# ph_shift_4_a10 = df_ph_4_a10["phase shift"].values
+# df_ph_2_a10 = pd.read_parquet(f"eff_a_2/a10/phase/phase_shift_r_{r_ph}.parquet")
+# ph_shift_2_a10 = df_ph_2_a10["phase shift"].values
+
+# df_ph_4_a01 = pd.read_parquet(f"eff_a_4/a01/phase/phase_shift_r_{r_ph}.parquet")
+# ph_shift_4_a01 = df_ph_4_a01["phase shift"].values
+# df_ph_2_a01 = pd.read_parquet(f"eff_a_2/a01/phase/phase_shift_r_{r_ph}.parquet")
+# ph_shift_2_a01 = df_ph_2_a01["phase shift"].values
+
+#plotting relative errors
+#eigenvalues (true w.r.t. delta, Coulomb, a=1)
 plt.figure(figsize=(7, 5))
 plt.plot(
     np.absolute(e),
@@ -335,29 +637,278 @@ plt.plot(
     label = r'Coulomb + $ c \delta^3(r) \, (1^{st}$ order)'
 )
 
-plt.text(
-    0.95, 0.25,
-    f'$c = {c:.2f}$',
-    fontsize=14,
-    color='black',
-    ha='right',
-    va='bottom',
-    transform=plt.gca().transAxes,
-    bbox=dict(facecolor='white', edgecolor='black', boxstyle='round,pad=0.3')
+plt.plot(
+    np.absolute(e),
+    np.absolute(e_a4_list[0] - e) / np.absolute(e),
+    marker='o',
+    linestyle='-',
+    color = 'green',
+    label = "a^4 (a=1)"
 )
+
+plt.plot(
+    np.absolute(e),
+    np.absolute(e_a2_list[0] - e) / np.absolute(e),
+    marker='o',
+    linestyle='-',
+    color = 'yellow',
+    label = "a^2 (a=1)"
+)
+
 plt.legend(fontsize = 14)
-plt.xlabel(r'$E_n$', fontsize=17)
-plt.ylabel(r'$\frac{|\Delta E_n|}{|E_n|}$', rotation=0, labelpad=20, fontsize=17, va='center')
-plt.title(f"Relative difference w.r.t. true eigenvalues")
+plt.xlabel(r'$|E|$', fontsize=17)
+plt.ylabel(r'$\frac{|\Delta E|}{|E|}$', rotation=0, labelpad=20, fontsize=17, va='center')
+plt.title(f"Energy - relative difference w.r.t. true eigenvalues")
 plt.grid(True)
 plt.xscale("log")
 plt.yscale("log")
 plt.subplots_adjust(left=0.18)
-plt.savefig(f"{name_true}/eigenvalues/relative_diff_{name_true}_coulomb_delta.png")
+plt.savefig(f"plot/eigenvalues_relative_diff_all.png")
 plt.show()
 plt.close()
 
+#eigenvalues (true w.r.t. a^4, a = 1, 3, 10, 0.1)
+# plt.figure(figsize=(7, 5))
+# plt.plot(
+#     np.absolute(e),
+#     np.absolute(e_a4_list[0] - e) / np.absolute(e),
+#     marker='o',
+#     linestyle='-',
+#     color = 'green',
+#     label = "a=1"
+# )
+
+# plt.plot(
+#     np.absolute(e),
+#     np.absolute(e_a4_list[1] - e) / np.absolute(e),
+#     marker='o',
+#     linestyle='-',
+#     color = 'red',
+#     label = "a=3"
+# )
+
+# plt.plot(
+#     np.absolute(e),
+#     np.absolute(e_a4_list[2] - e) / np.absolute(e),
+#     marker='o',
+#     linestyle='-',
+#     color = 'blue',
+#     label = "a=10"
+# )
+
+# plt.plot(
+#     np.absolute(e),
+#     np.absolute(e_a4_list[3] - e) / np.absolute(e),
+#     marker='o',
+#     linestyle='-',
+#     color = 'black',
+#     label = "a=0.1"
+# )
+
+# plt.legend(fontsize = 14)
+# plt.xlabel(r'$|E|$', fontsize=17)
+# plt.ylabel(r'$\frac{|\Delta E|}{|E|}$', rotation=0, labelpad=20, fontsize=17, va='center')
+# plt.title(f"Energy - relative difference w.r.t. true eigenvalues (a^4)")
+# plt.grid(True)
+# plt.xscale("log")
+# plt.yscale("log")
+# plt.subplots_adjust(left=0.18)
+# plt.savefig(f"plot/eigenvalues_relative_diff_a_4.png")
+# plt.show()
+# plt.close()
+
+# #eigenvalues (true w.r.t. a^2, a = 1, 3, 10, 0.1)
+# plt.figure(figsize=(7, 5))
+# plt.plot(
+#     np.absolute(e),
+#     np.absolute(e_a2_list[0] - e) / np.absolute(e),
+#     marker='o',
+#     linestyle='-',
+#     color = 'yellow',
+#     label = "a=1"
+# )
+
+# plt.plot(
+#     np.absolute(e),
+#     np.absolute(e_a2_list[1]  - e) / np.absolute(e),
+#     marker='o',
+#     linestyle='-',
+#     color = 'red',
+#     label = "a=3"
+# )
+
+# plt.plot(
+#     np.absolute(e),
+#     np.absolute(e_a2_list[2] - e) / np.absolute(e),
+#     marker='o',
+#     linestyle='-',
+#     color = 'blue',
+#     label = "a=10"
+# )
+
+# plt.plot(
+#     np.absolute(e),
+#     np.absolute(e_a2_list[3] - e) / np.absolute(e),
+#     marker='o',
+#     linestyle='-',
+#     color = 'black',
+#     label = "a=0.1"
+# )
+
+# plt.legend(fontsize = 14)
+# plt.xlabel(r'$|E|$', fontsize=17)
+# plt.ylabel(r'$\frac{|\Delta E|}{|E|}$', rotation=0, labelpad=20, fontsize=17, va='center')
+# plt.title(f"Energy - relative difference w.r.t. true eigenvalues (a^2)")
+# plt.grid(True)
+# plt.xscale("log")
+# plt.yscale("log")
+# plt.subplots_adjust(left=0.18)
+# plt.savefig(f"plot/eigenvalues_relative_diff_a_2.png")
+# plt.show()
+# plt.close()
+
+
+#phase shift (true w.r.t. Coulomb, a=1)
+plt.figure(figsize=(7, 5))
+plt.plot(
+    np.absolute(e),
+    np.absolute(ph_shift_cou - ph_shift) / np.absolute(ph_shift),
+    marker='o',
+    linestyle='-',
+    color = 'blue',
+    label = "Coulomb"
+)
+
+plt.plot(
+    np.absolute(e),
+    np.absolute(ph_shift_a4_list[0] - ph_shift) / np.absolute(ph_shift),
+    marker='o',
+    linestyle='-',
+    color = 'green',
+    label = "a^4 (a=1)"
+)
+
+plt.plot(
+    np.absolute(e),
+    np.absolute(ph_shift_a2_list[0] - ph_shift) / np.absolute(ph_shift),
+    marker='o',
+    linestyle='-',
+    color = 'yellow',
+    label = "a^2 (a=1)"
+)
+
+plt.legend(fontsize = 14)
+plt.xlabel(r'$|E|$', fontsize=17)
+plt.ylabel(r'$|\Delta \delta(E)|$', rotation=0, labelpad=30, fontsize=17, va='center')
+plt.title(f"Phase shift - relative difference w.r.t. true phase shift")
+plt.grid(True)
+plt.xscale("log")
+plt.yscale("log")
+plt.subplots_adjust(left=0.20)
+plt.savefig(f"plot/phase_relative_diff_r_{r_ph}_all.png")
+plt.show()
+plt.close()
+
+#phase shift (true w.r.t. a^4, a = 1, 3, 10, 0.1)
+# plt.figure(figsize=(7, 5))
+# plt.plot(
+#     np.absolute(e),
+#     np.absolute(ph_shift_a4_list[0] - ph_shift) / np.absolute(ph_shift),
+#     marker='o',
+#     linestyle='-',
+#     color = 'green',
+#     label = "a=1"
+# )
+
+# plt.plot(
+#     np.absolute(e),
+#     np.absolute(ph_shift_a4_list[1] - ph_shift) / np.absolute(ph_shift),
+#     marker='o',
+#     linestyle='-',
+#     color = 'red',
+#     label = "a=3"
+# )
+
+# plt.plot(
+#     np.absolute(e),
+#     np.absolute(ph_shift_a4_list[2] - ph_shift) / np.absolute(ph_shift),
+#     marker='o',
+#     linestyle='-',
+#     color = 'blue',
+#     label = "a=10"
+# )
+
+# plt.plot(
+#     np.absolute(e),
+#     np.absolute(ph_shift_a4_list[3] - ph_shift) / np.absolute(ph_shift),
+#     marker='o',
+#     linestyle='-',
+#     color = 'black',
+#     label = "a=0.1"
+# )
+
+# plt.legend(fontsize = 14)
+# plt.xlabel(r'$|E|$', fontsize=17)
+# plt.ylabel(r'$|\Delta \delta(E)|$', rotation=0, labelpad=30, fontsize=17, va='center')
+# plt.title(f"Phase shift - relative difference w.r.t. true phase shift (a^4)")
+# plt.grid(True)
+# plt.xscale("log")
+# plt.yscale("log")
+# plt.subplots_adjust(left=0.20)
+# plt.savefig(f"plot/phase_relative_diff_r_{r_ph}_a_4.png")
+# plt.show()
+# plt.close()
+
+# #phase shift (true w.r.t. a^2, a = 1, 3, 10, 0.1)
+# plt.figure(figsize=(7, 5))
+# plt.plot(
+#     np.absolute(e),
+#     np.absolute(ph_shift_a2_list[0] - ph_shift) / np.absolute(ph_shift),
+#     marker='o',
+#     linestyle='-',
+#     color = 'yellow',
+#     label = "a=1"
+# )
+
+# plt.plot(
+#     np.absolute(e),
+#     np.absolute(ph_shift_a2_list[1] - ph_shift) / np.absolute(ph_shift),
+#     marker='o',
+#     linestyle='-',
+#     color = 'red',
+#     label = "a=3"
+# )
+
+# plt.plot(
+#     np.absolute(e),
+#     np.absolute(ph_shift_a2_list[2] - ph_shift) / np.absolute(ph_shift),
+#     marker='o',
+#     linestyle='-',
+#     color = 'blue',
+#     label = "a=10"
+# )
+
+# plt.plot(
+#     np.absolute(e),
+#     np.absolute(ph_shift_a2_list[3] - ph_shift) / np.absolute(ph_shift),
+#     marker='o',
+#     linestyle='-',
+#     color = 'black',
+#     label = "a=0.1"
+# )
+
+# plt.legend(fontsize = 14)
+# plt.xlabel(r'$|E|$', fontsize=17)
+# plt.ylabel(r'$|\Delta \delta(E)|$', rotation=0, labelpad=30, fontsize=17, va='center')
+# plt.title(f"Phase shift - relative difference w.r.t. true phase shift (a^2)")
+# plt.grid(True)
+# plt.xscale("log")
+# plt.yscale("log")
+# plt.subplots_adjust(left=0.20)
+# plt.savefig(f"plot/phase_relative_diff_r_{r_ph}_a_2.png")
+# plt.show()
+# plt.close()
 
 
 
-    
+

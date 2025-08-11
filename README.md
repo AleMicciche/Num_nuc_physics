@@ -1,15 +1,16 @@
-# Overview
+## Overview
 
-This repository contains the code and the results obtained by testing various effective potentials to describe the low energy behaviour of a given short range potential. The results obtain from the **`code.py`** are colleected in the folder:
+This repository contains the code and results from testing several effective potentials to describe the low-energy behavior of a given short-range potential. A brief review of the theory, references, and a summary of the main results are provided in **`summary_project.pdf`**.
 
-*  **`Coulomb`**:
-  for a Coulombic potential
+## Repository structure
 
-*  **`true`**:
-  for the chosen short range potential
+All results produced by **`code.py`** are saved in:
 
-*  **`eff_a_4`**:
-  for an effective field theory up to order a^4. It contains subfolders for different values of a
+- **`Coulomb/`** — for a Coulomb potential  
+- **`true/`** — for the chosen short-range potential  
+- **`eff_a_4/`** — for an effective field theory up to order \(a^4\), with subfolders for different values of \(a\)  
+- **`eff_a_2/`** — for an effective field theory up to order \(a^2\), with subfolders for different values of \(a\)
 
-*  **`eff_a_2`**:
-  for an effective field theory up to order a^2. It contains subfolders for different values of a
+Each folder is organized into subfolders by result type (eigenfunctions, eigenvalues, phase shifts).
+
+> Example output from a run is shown in **`Terminal.txt`**.

@@ -1,6 +1,6 @@
 ## Overview
 
-This repository contains the code and results from testing several effective potentials to describe the low-energy behavior of a given short-range potential. A brief review of the theory, references, and a summary of the main results are provided in **`summary_project.pdf`**.
+This repository contains the code and results from testing several effective potentials to describe the low-energy behavior of a given short-range potential. A brief review of the theory, details of the chosen potentials, references, and a summary of the main results are provided in **`summary_project.pdf`**.
 
 ## Repository structure
 

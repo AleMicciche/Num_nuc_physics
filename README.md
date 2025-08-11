@@ -11,6 +11,6 @@ Eigenfunctions, eigenvalues and phase shifts computed in **`code.py`** are saved
 - **`eff_a_4/`** — for an effective field theory up to order $a^4$, with subfolders for different values of $a$;
 - **`eff_a_2/`** — for an effective field theory up to order $a^2$, with subfolders for different values of $a$.
 
-The **`plot/`** folder contains plots comparing results across the different theories.
+The **`plot`** folder contains plots comparing results across the different theories.
 
 > Example output from a run is shown in **`terminal.txt`**.

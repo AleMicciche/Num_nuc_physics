@@ -13,4 +13,4 @@ All results produced by **`code.py`** are saved in:
 
 Each folder is organized into subfolders by result type (eigenfunctions, eigenvalues, phase shifts).
 
-> Example output from a run is shown in **`Terminal.txt`**.
+> Example output from a run is shown in **`terminal.txt`**.

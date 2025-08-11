@@ -8,8 +8,8 @@ All results produced by **`code.py`** are saved in:
 
 - **`Coulomb/`** — for a Coulomb potential  
 - **`true/`** — for the chosen short-range potential  
-- **`eff_a_4/`** — for an effective field theory up to order \(a^4\), with subfolders for different values of \(a\)  
-- **`eff_a_2/`** — for an effective field theory up to order \(a^2\), with subfolders for different values of \(a\)
+- **`eff_a_4/`** — for an effective field theory up to order $a^4$, with subfolders for different values of $a$ 
+- **`eff_a_2/`** — for an effective field theory up to order $a^2$, with subfolders for different values of $a$
 
 Each folder is organized into subfolders by result type (eigenfunctions, eigenvalues, phase shifts).
 

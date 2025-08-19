@@ -23,7 +23,7 @@ To run the script and solve the radial Schrödinger equation with, for instance,
 $ python code.py --r_max 1200 --x_0 -9.0 --dx 0.01 --Z 1 --n_max 20 --r_ph 800 --b 1
 ```
 with parameters representing:
-```bash
+```console
 $ python code.py -h
 -- usage: code.py [-h] [--r_max R_MAX] [--x_0 X_0] [--dx DX] [--Z Z] [--n_max N_MAX] [--r_ph R_PH] [--b B]
 

@@ -44,6 +44,6 @@ To use the default values run simply:
 ```bash
 $ python code.py 
 ```
-Notice that, in order to obtain convergent results in **`code.py`**, not all combinations of paramter values are valid. For instance, the maximum eigenvalues index $n_{max}$ is related to the maximum radius $r_{max}$, such that the outermost node of the wavefunction lies within within $r_{max}$.
+Notice that, in order to obtain convergent results in **`code.py`**, not all combinations of paramter values are valid. For instance, the maximum eigenvalue index $n_{max}$ is related to the maximum radius $r_{max}$, such that the outermost node of the wavefunction lies within within $r_{max}$.
 
 

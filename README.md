@@ -20,11 +20,24 @@ The **`plot`** folder contains plots comparing results across the different theo
 To run the script and solve the radial Schrödinger equation with, for instance, the parameters below, use the following command in your terminal:
 
 ```bash
-python code.py --r_max 1200 --x_0 -9.0 --dx 0.01 --Z 1 --n_max 20 --r_ph 800 --b 1
+$ python code.py --r_max 1200 --x_0 -9.0 --dx 0.01 --Z 1 --n_max 20 --r_ph 800 --b 1
 ```
 with parameters representing:
 ```bash
-python code.py --r_max 1200 --x_0 -9.0 --dx 0.01 --Z 1 --n_max 20 --r_ph 800 --b 1
+$ python code.py -h
+-- usage: code.py [-h] [--r_max R_MAX] [--x_0 X_0] [--dx DX] [--Z Z] [--n_max N_MAX] [--r_ph R_PH] [--b B]
+
+--Solve the radial Schrödinger equation.
+
+--options:
+  -h, --help     show this help message and exit
+  --r_max R_MAX  Maximum radius
+  --x_0 X_0      Minimum x value
+  --dx DX        Grid spacing
+  --Z Z          Atomic number
+  --n_max N_MAX  Maximun number of eigenvalues
+  --r_ph R_PH    Phase shifts evaluation point
+  --b B          Inverse of the range of true potential
 ```
 
 

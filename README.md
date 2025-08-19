@@ -14,3 +14,19 @@ Eigenfunctions, eigenvalues and phase shifts computed in **`code.py`** are saved
 The **`plot`** folder contains plots comparing results across the different theories.
 
 > Example output from a run is shown in **`terminal.txt`**.
+
+## Running the code
+
+To run the script and solve the radial Schrödinger equation with, for instance, the parameters below, use the following command in your terminal:
+
+```bash
+python code.py --r_max 1200 --x_0 -9.0 --dx 0.01 --Z 1 --n_max 20 --r_ph 800 --b 1
+```
+with parameters representing:
+```bash
+python code.py --r_max 1200 --x_0 -9.0 --dx 0.01 --Z 1 --n_max 20 --r_ph 800 --b 1
+```
+
+
+
+

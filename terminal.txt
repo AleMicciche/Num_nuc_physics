@@ -1,0 +1,827 @@
+Radial grid information:
+
+dx =  0.01
+x_min =  -8.0
+n_points =  1490
+r(0) =  0.00033546262790251185
+r(n_points) =  982.4014172182594
+-----------------------------------------------
+
+
+--------------------------------------------------
+Coulomb theory
+--------------------------------------------------
+
+ Atomic number Z = 1
+convergence achieved at iter #    7, de =   1.46307001e-11
+convergence achieved at iter #   10, de =   3.25039587e-13
+convergence achieved at iter #   10, de =  -4.36189916e-14
+convergence achieved at iter #   10, de =  -3.04331517e-14
+convergence achieved at iter #   15, de =  -6.16058179e-15
+convergence achieved at iter #   13, de =   1.40448489e-14
+convergence achieved at iter #   16, de =   7.80665486e-13
+convergence achieved at iter #   14, de =   1.62909566e-14
+convergence achieved at iter #   16, de =   1.89918034e-15
+convergence achieved at iter #   13, de =   1.72874650e-11
+convergence achieved at iter #   18, de =   3.18059320e-12
+convergence achieved at iter #   17, de =   1.01773634e-12
+convergence achieved at iter #   13, de =   9.30349928e-13
+convergence achieved at iter #   19, de =   3.27596195e-12
+convergence achieved at iter #   19, de =   2.13701542e-13
+convergence achieved at iter #   16, de =   1.31381799e-14
+convergence achieved at iter #   17, de =   1.29045044e-12
+convergence achieved at iter #   20, de =   8.48376679e-11
+convergence achieved at iter #   21, de =   5.30222561e-15
+convergence achieved at iter #   17, de =   1.64095610e-12
+-----------------------------------------------
+
+Coulomb energy eigenvalues
+
+|   n |           E |
+|----:|------------:|
+|   1 | -1          |
+|   2 | -0.25       |
+|   3 | -0.111111   |
+|   4 | -0.0625     |
+|   5 | -0.04       |
+|   6 | -0.0277778  |
+|   7 | -0.0204082  |
+|   8 | -0.015625   |
+|   9 | -0.0123457  |
+|  10 | -0.01       |
+|  11 | -0.00826446 |
+|  12 | -0.00694445 |
+|  13 | -0.00591716 |
+|  14 | -0.00510204 |
+|  15 | -0.00444445 |
+|  16 | -0.00390625 |
+|  17 | -0.00346021 |
+|  18 | -0.00308642 |
+|  19 | -0.00277009 |
+|  20 | -0.0024999  |
+-----------------------------------------------
+
+Coulomb phase shifts at r = 800
+
+|   n |   phase shift |   phase shift mod 2π (π units) |
+|----:|--------------:|-------------------------------:|
+|   1 |     -796.319  |                       0.523754 |
+|   2 |     -398.16   |                       1.26188  |
+|   3 |     -265.44   |                       1.50792  |
+|   4 |     -199.08   |                       0.630938 |
+|   5 |     -159.264  |                       1.30475  |
+|   6 |     -132.72   |                       1.75396  |
+|   7 |     -113.76   |                       1.78911  |
+|   8 |      -99.5399 |                       0.315468 |
+|   9 |      -88.4799 |                       1.83597  |
+|  10 |      -79.6319 |                       0.652373 |
+|  11 |      -72.3927 |                       0.956702 |
+|  12 |      -66.3599 |                       0.876976 |
+|  13 |      -61.2553 |                       0.501823 |
+|  14 |      -56.88   |                       1.89455  |
+|  15 |      -53.088  |                       1.10158  |
+|  16 |      -49.77   |                       0.157724 |
+|  17 |      -46.8422 |                       1.08967  |
+|  18 |      -44.2414 |                       1.91753  |
+|  19 |      -41.9036 |                       0.66166  |
+|  20 |      -39.8392 |                       1.31878  |
+
+--------------------------------------------------
+Exact theory
+--------------------------------------------------
+
+ Parameter b = 1
+convergence achieved at iter #    8, de =   4.35308460e-12
+convergence achieved at iter #   11, de =  -2.48550785e-13
+convergence achieved at iter #   13, de =   1.09926244e-13
+convergence achieved at iter #   12, de =   2.55528410e-11
+convergence achieved at iter #   15, de =   7.39081865e-13
+convergence achieved at iter #   15, de =   2.35730540e-12
+convergence achieved at iter #   14, de =   3.55052293e-11
+convergence achieved at iter #   18, de =   5.79559993e-12
+convergence achieved at iter #   17, de =   5.80144200e-13
+convergence achieved at iter #   19, de =   1.25861954e-13
+convergence achieved at iter #   15, de =   8.99248356e-13
+convergence achieved at iter #   18, de =   2.02887031e-13
+convergence achieved at iter #   18, de =   3.27592097e-11
+convergence achieved at iter #   17, de =   1.81523067e-14
+convergence achieved at iter #   18, de =  -8.07669035e-17
+convergence achieved at iter #   20, de =   2.27200714e-11
+convergence achieved at iter #   20, de =   3.67358747e-15
+convergence achieved at iter #   22, de =   2.46669662e-16
+convergence achieved at iter #   18, de =   6.99002748e-13
+convergence achieved at iter #   23, de =   9.42686179e-12
+-----------------------------------------------
+
+true energy eigenvalues
+
+|   n |           E |
+|----:|------------:|
+|   1 | -2.57422    |
+|   2 | -0.366651   |
+|   3 | -0.140751   |
+|   4 | -0.0742991  |
+|   5 | -0.0458536  |
+|   6 | -0.0310985  |
+|   7 | -0.0224708  |
+|   8 | -0.016993   |
+|   9 | -0.0132991  |
+|  10 | -0.0106908  |
+|  11 | -0.00878096 |
+|  12 | -0.00734067 |
+|  13 | -0.00622774 |
+|  14 | -0.00534999 |
+|  15 | -0.00464553 |
+|  16 | -0.00407158 |
+|  17 | -0.00359778 |
+|  18 | -0.00320212 |
+|  19 | -0.00286831 |
+|  20 | -0.00258408 |
+-----------------------------------------------
+
+true phase shifts at r = 800
+
+|   n |   phase shift |   phase shift mod 2π (π units) |
+|----:|--------------:|-------------------------------:|
+|   1 |    -1277.65   |                     1.31283    |
+|   2 |     -482.185  |                     0.515772   |
+|   3 |     -298.753  |                     0.903833   |
+|   4 |     -217.06   |                     0.907793   |
+|   5 |     -170.519  |                     1.72196    |
+|   6 |     -140.429  |                     1.30005    |
+|   7 |     -119.37   |                     0.00323006 |
+|   8 |     -103.806  |                     0.957563   |
+|   9 |      -91.8329 |                     0.768684   |
+|  10 |      -82.3366 |                     1.79144    |
+|  11 |      -74.6205 |                     0.247562   |
+|  12 |      -68.2268 |                     0.282741   |
+|  13 |      -62.8423 |                     1.99666    |
+|  14 |      -58.2457 |                     1.45983    |
+|  15 |      -54.2756 |                     0.723531   |
+|  16 |      -50.8123 |                     1.82595    |
+|  17 |      -47.7644 |                     0.796128   |
+|  18 |      -45.0622 |                     1.65625    |
+|  19 |      -42.6434 |                     0.426193   |
+|  20 |      -40.498  |                     1.10909    |
+
+--------------------------------------------------
+First order perturbation theory analysis
+--------------------------------------------------
+
+ Coefficient delta function: k = -1.1922015621354842
+
+--------------------------------------------------
+Effective theory: a = 1
+--------------------------------------------------
+
+[ a^4 theory ]
+
+ Optimization algorithm
+
+ objective = 0.0, best parameters for a = 1: c = -51.26003695625012, d = -2.097264540949813
+
+ Solving Schroedinger equation
+convergence achieved at iter #    5, de =   7.72821177e-11
+convergence achieved at iter #   12, de =  -2.04919090e-13
+convergence achieved at iter #   12, de =  -8.49426246e-14
+convergence achieved at iter #   11, de =   2.09821500e-12
+convergence achieved at iter #   13, de =   5.74235608e-11
+convergence achieved at iter #   15, de =   8.14896741e-15
+convergence achieved at iter #   14, de =   2.28717006e-12
+convergence achieved at iter #   17, de =   5.44999197e-14
+convergence achieved at iter #   13, de =   1.48045388e-15
+convergence achieved at iter #   16, de =   7.74794092e-14
+convergence achieved at iter #   14, de =   2.14253611e-11
+convergence achieved at iter #   20, de =   4.64238281e-16
+convergence achieved at iter #   20, de =   4.10359348e-15
+convergence achieved at iter #   14, de =  -2.22208375e-16
+convergence achieved at iter #   21, de =   7.22760248e-16
+convergence achieved at iter #   21, de =   5.55615517e-11
+convergence achieved at iter #   17, de =   5.45014922e-11
+convergence achieved at iter #   19, de =   1.58637648e-11
+convergence achieved at iter #   16, de =   4.78727502e-14
+convergence achieved at iter #   21, de =   5.92340243e-12
+-----------------------------------------------
+
+eff_a_4/a1 energy eigenvalues
+
+|   n |           E |
+|----:|------------:|
+|   1 | -2.62056    |
+|   2 | -0.36456    |
+|   3 | -0.140706   |
+|   4 | -0.074295   |
+|   5 | -0.0458529  |
+|   6 | -0.0310983  |
+|   7 | -0.0224708  |
+|   8 | -0.016993   |
+|   9 | -0.0132991  |
+|  10 | -0.0106908  |
+|  11 | -0.00878096 |
+|  12 | -0.00734067 |
+|  13 | -0.00622774 |
+|  14 | -0.00534999 |
+|  15 | -0.00464553 |
+|  16 | -0.00407158 |
+|  17 | -0.00359778 |
+|  18 | -0.00320212 |
+|  19 | -0.00286831 |
+|  20 | -0.00258408 |
+-----------------------------------------------
+
+eff_a_4/a1 phase shifts at r = 800
+
+|   n |   phase shift |   phase shift mod 2π (π units) |
+|----:|--------------:|-------------------------------:|
+|   1 |    -1289.09   |                     1.66918    |
+|   2 |     -480.808  |                     0.954051   |
+|   3 |     -298.706  |                     0.918994   |
+|   4 |     -217.054  |                     0.909721   |
+|   5 |     -170.518  |                     1.72237    |
+|   6 |     -140.429  |                     1.30016    |
+|   7 |     -119.37   |                     0.00326956 |
+|   8 |     -103.806  |                     0.957578   |
+|   9 |      -91.8329 |                     0.768691   |
+|  10 |      -82.3366 |                     1.79144    |
+|  11 |      -74.6205 |                     0.247563   |
+|  12 |      -68.2268 |                     0.282742   |
+|  13 |      -62.8423 |                     1.99666    |
+|  14 |      -58.2457 |                     1.45983    |
+|  15 |      -54.2756 |                     0.723531   |
+|  16 |      -50.8123 |                     1.82595    |
+|  17 |      -47.7644 |                     0.796128   |
+|  18 |      -45.0622 |                     1.65625    |
+|  19 |      -42.6434 |                     0.426193   |
+|  20 |      -40.498  |                     1.10909    |
+
+[ a^2 theory (d_1 = 0) ]
+
+ Optimization algorithm
+
+ objective = 0.0, best parameters for a = 1: c_0 = -48.43108360129358  (d_1 = 0)
+
+ Solving Schroedinger equation
+convergence achieved at iter #    5, de =   6.28363922e-11
+convergence achieved at iter #   11, de =   4.43125405e-14
+convergence achieved at iter #   12, de =  -9.90114183e-14
+convergence achieved at iter #   11, de =   4.04920271e-14
+convergence achieved at iter #   14, de =   4.29404748e-14
+convergence achieved at iter #   16, de =   8.30828466e-11
+convergence achieved at iter #   15, de =   1.01494620e-13
+convergence achieved at iter #   17, de =   2.58788366e-11
+convergence achieved at iter #   16, de =   1.19514208e-14
+convergence achieved at iter #   17, de =   1.62977991e-15
+convergence achieved at iter #   13, de =   5.88188444e-11
+convergence achieved at iter #   21, de =   2.81041001e-11
+convergence achieved at iter #   17, de =   3.80882472e-14
+convergence achieved at iter #   15, de =   2.35381344e-11
+convergence achieved at iter #   17, de =   3.24430585e-11
+convergence achieved at iter #   19, de =   3.41872805e-13
+convergence achieved at iter #   19, de =   5.71205718e-14
+convergence achieved at iter #   21, de =   4.91782340e-15
+convergence achieved at iter #   17, de =   8.35764588e-15
+convergence achieved at iter #   22, de =   2.02912844e-14
+-----------------------------------------------
+
+eff_a_2/a1 energy eigenvalues
+
+|   n |           E |
+|----:|------------:|
+|   1 | -2.69648    |
+|   2 | -0.36373    |
+|   3 | -0.140637   |
+|   4 | -0.0742815  |
+|   5 | -0.045849   |
+|   6 | -0.0310969  |
+|   7 | -0.0224702  |
+|   8 | -0.0169927  |
+|   9 | -0.0132989  |
+|  10 | -0.0106908  |
+|  11 | -0.00878091 |
+|  12 | -0.00734064 |
+|  13 | -0.00622772 |
+|  14 | -0.00534998 |
+|  15 | -0.00464553 |
+|  16 | -0.00407158 |
+|  17 | -0.00359778 |
+|  18 | -0.00320212 |
+|  19 | -0.00286831 |
+|  20 | -0.00258408 |
+-----------------------------------------------
+
+eff_a_2/a1 phase shifts at r = 800
+
+|   n |   phase shift |   phase shift mod 2π (π units) |
+|----:|--------------:|-------------------------------:|
+|   1 |    -1307.63   |                     1.76784    |
+|   2 |     -480.26   |                     1.12841    |
+|   3 |     -298.632  |                     0.942509   |
+|   4 |     -217.034  |                     0.915998   |
+|   5 |     -170.511  |                     1.72468    |
+|   6 |     -140.425  |                     1.30119    |
+|   7 |     -119.369  |                     0.00378528 |
+|   8 |     -103.805  |                     0.95786    |
+|   9 |      -91.8324 |                     0.768855   |
+|  10 |      -82.3363 |                     1.79154    |
+|  11 |      -74.6203 |                     0.247625   |
+|  12 |      -68.2267 |                     0.282782   |
+|  13 |      -62.8423 |                     1.99669    |
+|  14 |      -58.2456 |                     1.45985    |
+|  15 |      -54.2756 |                     0.723542   |
+|  16 |      -50.8123 |                     1.82596    |
+|  17 |      -47.7644 |                     0.796132   |
+|  18 |      -45.0622 |                     1.65625    |
+|  19 |      -42.6434 |                     0.426194   |
+|  20 |      -40.498  |                     1.10909    |
+
+--------------------------------------------------
+Effective theory: a = 3
+--------------------------------------------------
+
+[ a^4 theory ]
+
+ Optimization algorithm
+
+ objective = 5.048709793414476e-29, best parameters for a = 3: c = -42.39644768561019, d = -10.111220712570631
+
+ Solving Schroedinger equation
+convergence achieved at iter #    8, de =   4.36055797e-13
+convergence achieved at iter #    8, de =   3.05689164e-13
+convergence achieved at iter #   12, de =  -5.17777229e-14
+convergence achieved at iter #   13, de =   1.05602494e-14
+convergence achieved at iter #   16, de =   4.45695479e-11
+convergence achieved at iter #   13, de =   1.72775917e-15
+convergence achieved at iter #   14, de =   2.54159076e-15
+convergence achieved at iter #   14, de =   7.05060843e-13
+convergence achieved at iter #   16, de =   8.56183283e-13
+convergence achieved at iter #   18, de =   1.50420946e-12
+convergence achieved at iter #   20, de =   9.63513126e-12
+convergence achieved at iter #   18, de =   3.50978935e-15
+convergence achieved at iter #   14, de =  -4.77619261e-16
+convergence achieved at iter #   20, de =   2.11127230e-15
+convergence achieved at iter #   18, de =   3.06457323e-11
+convergence achieved at iter #   15, de =   6.19959287e-14
+convergence achieved at iter #   16, de =   1.23406523e-15
+convergence achieved at iter #   21, de =   1.03717561e-14
+convergence achieved at iter #   18, de =   1.72060079e-12
+convergence achieved at iter #   18, de =   2.50958373e-12
+-----------------------------------------------
+
+eff_a_4/a3 energy eigenvalues
+
+|   n |           E |
+|----:|------------:|
+|   1 | -1.26976    |
+|   2 | -0.434616   |
+|   3 | -0.145696   |
+|   4 | -0.0751549  |
+|   5 | -0.0460902  |
+|   6 | -0.0311832  |
+|   7 | -0.0225065  |
+|   8 | -0.0170098  |
+|   9 | -0.0133077  |
+|  10 | -0.0106955  |
+|  11 | -0.00878361 |
+|  12 | -0.00734222 |
+|  13 | -0.00622867 |
+|  14 | -0.00535055 |
+|  15 | -0.00464587 |
+|  16 | -0.00407178 |
+|  17 | -0.00359789 |
+|  18 | -0.00320218 |
+|  19 | -0.00286833 |
+|  20 | -0.00258408 |
+-----------------------------------------------
+
+eff_a_4/a3 phase shifts at r = 800
+
+|   n |   phase shift |   phase shift mod 2π (π units) |
+|----:|--------------:|-------------------------------:|
+|   1 |     -897.321  |                       0.374003 |
+|   2 |     -524.977  |                       0.894753 |
+|   3 |     -303.956  |                       1.24773  |
+|   4 |     -218.306  |                       0.511014 |
+|   5 |     -170.959  |                       1.58213  |
+|   6 |     -140.62   |                       1.23924  |
+|   7 |     -119.465  |                       1.97306  |
+|   8 |     -103.857  |                       0.941191 |
+|   9 |      -91.8626 |                       0.759217 |
+|  10 |      -82.3546 |                       1.78571  |
+|  11 |      -74.6318 |                       0.243975 |
+|  12 |      -68.234  |                       0.280445 |
+|  13 |      -62.847  |                       1.99517  |
+|  14 |      -58.2487 |                       1.45886  |
+|  15 |      -54.2776 |                       0.722904 |
+|  16 |      -50.8135 |                       1.82555  |
+|  17 |      -47.7651 |                       0.79589  |
+|  18 |      -45.0626 |                       1.65612  |
+|  19 |      -42.6435 |                       0.42614  |
+|  20 |      -40.498  |                       1.10909  |
+
+[ a^2 theory (d_1 = 0) ]
+
+ Optimization algorithm
+
+ objective = 8.077935669463161e-28, best parameters for a = 3: c_0 = -27.234801745159775  (d_1 = 0)
+
+ Solving Schroedinger equation
+convergence achieved at iter #    6, de =   2.68683902e-11
+convergence achieved at iter #    9, de =   3.65491434e-13
+convergence achieved at iter #   10, de =  -6.31042108e-14
+convergence achieved at iter #    9, de =   9.51944417e-11
+convergence achieved at iter #   15, de =   9.28413740e-15
+convergence achieved at iter #   13, de =   1.21717127e-14
+convergence achieved at iter #   15, de =   3.08121788e-11
+convergence achieved at iter #   11, de =   3.16976258e-12
+convergence achieved at iter #   15, de =   9.27934759e-14
+convergence achieved at iter #   13, de =   3.10320188e-11
+convergence achieved at iter #   14, de =   1.33527323e-11
+convergence achieved at iter #   17, de =   4.01236801e-11
+convergence achieved at iter #   16, de =   7.20282793e-16
+convergence achieved at iter #   15, de =   6.13416709e-11
+convergence achieved at iter #   19, de =   2.57938013e-14
+convergence achieved at iter #   17, de =   3.73031217e-11
+convergence achieved at iter #   19, de =   3.11493358e-15
+convergence achieved at iter #   19, de =   2.48309640e-15
+convergence achieved at iter #   17, de =   1.16620211e-14
+convergence achieved at iter #   16, de =   1.23113662e-11
+-----------------------------------------------
+
+eff_a_2/a3 energy eigenvalues
+
+|   n |           E |
+|----:|------------:|
+|   1 | -1.5018     |
+|   2 | -0.433937   |
+|   3 | -0.143448   |
+|   4 | -0.0747898  |
+|   5 | -0.0459921  |
+|   6 | -0.0311486  |
+|   7 | -0.022492   |
+|   8 | -0.017003   |
+|   9 | -0.0133042  |
+|  10 | -0.0106936  |
+|  11 | -0.00878255 |
+|  12 | -0.0073416  |
+|  13 | -0.0062283  |
+|  14 | -0.00535032 |
+|  15 | -0.00464573 |
+|  16 | -0.0040717  |
+|  17 | -0.00359785 |
+|  18 | -0.00320215 |
+|  19 | -0.00286833 |
+|  20 | -0.00258408 |
+-----------------------------------------------
+
+eff_a_2/a3 phase shifts at r = 800
+
+|   n |   phase shift |   phase shift mod 2π (π units) |
+|----:|--------------:|-------------------------------:|
+|   1 |     -975.873  |                       1.36985  |
+|   2 |     -524.566  |                       1.02531  |
+|   3 |     -301.602  |                       1.9972   |
+|   4 |     -217.775  |                       0.680002 |
+|   5 |     -170.777  |                       1.64009  |
+|   6 |     -140.542  |                       1.2641   |
+|   7 |     -119.427  |                       1.9853   |
+|   8 |     -103.837  |                       0.947799 |
+|   9 |      -91.8507 |                       0.763026 |
+|  10 |      -82.3474 |                       1.78801  |
+|  11 |      -74.6272 |                       0.245412 |
+|  12 |      -68.2311 |                       0.281364 |
+|  13 |      -62.8451 |                       1.99577  |
+|  14 |      -58.2475 |                       1.45925  |
+|  15 |      -54.2768 |                       0.723155 |
+|  16 |      -50.813  |                       1.82571  |
+|  17 |      -47.7648 |                       0.795985 |
+|  18 |      -45.0625 |                       1.65617  |
+|  19 |      -42.6435 |                       0.426161 |
+|  20 |      -40.498  |                       1.10909  |
+
+--------------------------------------------------
+Effective theory: a = 10
+--------------------------------------------------
+
+[ a^4 theory ]
+
+ Optimization algorithm
+
+ objective = 2.0194839173657902e-28, best parameters for a = 10: c = -28.255019917710914, d = -9.033595204187787
+
+ Solving Schroedinger equation
+convergence achieved at iter #    7, de =   1.29472839e-11
+convergence achieved at iter #   10, de =   2.54510806e-14
+convergence achieved at iter #   13, de =   7.11758925e-14
+convergence achieved at iter #   12, de =   1.01829282e-12
+convergence achieved at iter #   12, de =   2.57045888e-14
+convergence achieved at iter #   12, de =   6.75968162e-15
+convergence achieved at iter #   15, de =   9.66582741e-12
+convergence achieved at iter #   12, de =   6.47319543e-11
+convergence achieved at iter #   14, de =   8.06705956e-11
+convergence achieved at iter #   17, de =   3.30067728e-11
+convergence achieved at iter #   13, de =   3.53306963e-13
+convergence achieved at iter #   18, de =  -8.84846974e-16
+convergence achieved at iter #   18, de =   9.64466352e-13
+convergence achieved at iter #   18, de =   4.55686878e-15
+convergence achieved at iter #   17, de =   8.28337920e-11
+convergence achieved at iter #   20, de =   1.08118424e-14
+convergence achieved at iter #   20, de =   5.08847559e-12
+convergence achieved at iter #   20, de =   2.63069557e-11
+convergence achieved at iter #   18, de =   3.82325804e-14
+convergence achieved at iter #   21, de =   3.25371086e-13
+-----------------------------------------------
+
+eff_a_4/a10 energy eigenvalues
+
+|   n |           E |
+|----:|------------:|
+|   1 | -1.00888    |
+|   2 | -0.273989   |
+|   3 | -0.148661   |
+|   4 | -0.0840165  |
+|   5 | -0.04765    |
+|   6 | -0.0316178  |
+|   7 | -0.0226706  |
+|   8 | -0.0170828  |
+|   9 | -0.0133437  |
+|  10 | -0.0107146  |
+|  11 | -0.00879424 |
+|  12 | -0.00734836 |
+|  13 | -0.0062323  |
+|  14 | -0.00535273 |
+|  15 | -0.00464717 |
+|  16 | -0.00407255 |
+|  17 | -0.00359833 |
+|  18 | -0.0032024  |
+|  19 | -0.00286842 |
+|  20 | -0.00258408 |
+-----------------------------------------------
+
+eff_a_4/a10 phase shifts at r = 800
+
+|   n |   phase shift |   phase shift mod 2π (π units) |
+|----:|--------------:|-------------------------------:|
+|   1 |     -799.848  |                       1.40049  |
+|   2 |     -416.825  |                       1.32056  |
+|   3 |     -307.034  |                       0.268198 |
+|   4 |     -230.818  |                       0.52837  |
+|   5 |     -173.828  |                       0.668952 |
+|   6 |     -141.597  |                       0.928416 |
+|   7 |     -119.9    |                       1.83469  |
+|   8 |     -104.08   |                       0.870395 |
+|   9 |      -91.9867 |                       0.719729 |
+|  10 |      -82.428  |                       1.76236  |
+|  11 |      -74.6769 |                       0.229609 |
+|  12 |      -68.2625 |                       0.271361 |
+|  13 |      -62.8654 |                       1.98933  |
+|  14 |      -58.2606 |                       1.45509  |
+|  15 |      -54.2852 |                       0.720479 |
+|  16 |      -50.8183 |                       1.82403  |
+|  17 |      -47.768  |                       0.794976 |
+|  18 |      -45.0642 |                       1.65563  |
+|  19 |      -42.6442 |                       0.425937 |
+|  20 |      -40.498  |                       1.10909  |
+
+[ a^2 theory (d_1 = 0) ]
+
+ Optimization algorithm
+
+ objective = 5.048709793414476e-29, best parameters for a = 10: c_0 = -14.54577423127235  (d_1 = 0)
+
+ Solving Schroedinger equation
+convergence achieved at iter #    7, de =   8.87087268e-12
+convergence achieved at iter #   10, de =  -3.86436909e-13
+convergence achieved at iter #   10, de =   4.67783865e-13
+convergence achieved at iter #   14, de =   2.12954532e-15
+convergence achieved at iter #   12, de =   4.95788473e-15
+convergence achieved at iter #   12, de =   2.18993175e-13
+convergence achieved at iter #   16, de =  -3.17977905e-15
+convergence achieved at iter #   13, de =   2.50889131e-13
+convergence achieved at iter #   15, de =   7.54075826e-13
+convergence achieved at iter #   16, de =   2.44604404e-14
+convergence achieved at iter #   16, de =   6.83925148e-15
+convergence achieved at iter #   16, de =   3.45782890e-12
+convergence achieved at iter #   19, de =   8.59155247e-15
+convergence achieved at iter #   19, de =   1.67425979e-16
+convergence achieved at iter #   16, de =   3.00723091e-15
+convergence achieved at iter #   15, de =   6.37257510e-12
+convergence achieved at iter #   20, de =   2.90188885e-13
+convergence achieved at iter #   20, de =   5.77954218e-16
+convergence achieved at iter #   17, de =   6.17970389e-11
+convergence achieved at iter #   21, de =   1.32164247e-11
+-----------------------------------------------
+
+eff_a_2/a10 energy eigenvalues
+
+|   n |           E |
+|----:|------------:|
+|   1 | -1.091      |
+|   2 | -0.326465   |
+|   3 | -0.155129   |
+|   4 | -0.0794076  |
+|   5 | -0.0467424  |
+|   6 | -0.0313846  |
+|   7 | -0.0225855  |
+|   8 | -0.0170456  |
+|   9 | -0.0133255  |
+|  10 | -0.010705   |
+|  11 | -0.00878893 |
+|  12 | -0.00734531 |
+|  13 | -0.0062305  |
+|  14 | -0.00535165 |
+|  15 | -0.00464653 |
+|  16 | -0.00407217 |
+|  17 | -0.00359811 |
+|  18 | -0.00320229 |
+|  19 | -0.00286838 |
+|  20 | -0.00258408 |
+-----------------------------------------------
+
+eff_a_2/a10 phase shifts at r = 800
+
+|   n |   phase shift |   phase shift mod 2π (π units) |
+|----:|--------------:|-------------------------------:|
+|   1 |     -831.762  |                       1.24178  |
+|   2 |     -454.994  |                       1.17094  |
+|   3 |     -313.641  |                       0.164818 |
+|   4 |     -224.398  |                       0.572021 |
+|   5 |     -172.164  |                       1.19848  |
+|   6 |     -141.073  |                       1.09492  |
+|   7 |     -119.675  |                       1.90637  |
+|   8 |     -103.966  |                       0.906452 |
+|   9 |      -91.9241 |                       0.739641 |
+|  10 |      -82.3912 |                       1.77406  |
+|  11 |      -74.6544 |                       0.236776 |
+|  12 |      -68.2483 |                       0.275879 |
+|  13 |      -62.8563 |                       1.99223  |
+|  14 |      -58.2547 |                       1.45696  |
+|  15 |      -54.2814 |                       0.721679 |
+|  16 |      -50.8159 |                       1.82478  |
+|  17 |      -47.7666 |                       0.795427 |
+|  18 |      -45.0634 |                       1.65587  |
+|  19 |      -42.6439 |                       0.426037 |
+|  20 |      -40.498  |                       1.10909  |
+
+--------------------------------------------------
+Effective theory: a = 0.1
+--------------------------------------------------
+
+[ a^4 theory ]
+
+ Optimization algorithm
+
+ objective = 5.048709793414476e-29, best parameters for a = 0.1: c = -154.93041281584374, d = -15.813109138086697
+
+ Solving Schroedinger equation
+convergence achieved at iter #    9, de =  -4.92316662e-12
+convergence achieved at iter #   13, de =   5.93929060e-13
+convergence achieved at iter #   13, de =   4.21758996e-14
+convergence achieved at iter #   14, de =   6.01884476e-13
+convergence achieved at iter #   15, de =   1.86144357e-12
+convergence achieved at iter #   17, de =  -1.19155437e-14
+convergence achieved at iter #   15, de =  -2.29168888e-15
+convergence achieved at iter #   18, de =  -5.17755062e-15
+convergence achieved at iter #   19, de =   1.96663872e-12
+convergence achieved at iter #   19, de =   4.10139013e-12
+convergence achieved at iter #   18, de =   1.76454078e-12
+convergence achieved at iter #   17, de =   9.08454409e-11
+convergence achieved at iter #   23, de =  -2.49471483e-16
+convergence achieved at iter #   22, de =   3.25410907e-11
+convergence achieved at iter #   17, de =   3.86473797e-14
+convergence achieved at iter #   23, de =   1.83270316e-14
+convergence achieved at iter #   25, de =   3.09121572e-13
+convergence achieved at iter #   22, de =   2.60260530e-14
+convergence achieved at iter #   23, de =   4.36262903e-14
+convergence achieved at iter #   24, de =   8.60304778e-15
+-----------------------------------------------
+
+eff_a_4/a01 energy eigenvalues
+
+|   n |           E |
+|----:|------------:|
+|   1 | -2.43983    |
+|   2 | -0.359781   |
+|   3 | -0.140269   |
+|   4 | -0.0742082  |
+|   5 | -0.0458276  |
+|   6 | -0.031089   |
+|   7 | -0.0224668  |
+|   8 | -0.0169911  |
+|   9 | -0.0132981  |
+|  10 | -0.0106903  |
+|  11 | -0.00878065 |
+|  12 | -0.00734049 |
+|  13 | -0.00622763 |
+|  14 | -0.00534992 |
+|  15 | -0.00464549 |
+|  16 | -0.00407156 |
+|  17 | -0.00359777 |
+|  18 | -0.00320211 |
+|  19 | -0.00286831 |
+|  20 | -0.00258408 |
+-----------------------------------------------
+
+eff_a_4/a01 phase shifts at r = 800
+
+|   n |   phase shift |   phase shift mod 2π (π units) |
+|----:|--------------:|-------------------------------:|
+|   1 |    -1243.85   |                      0.0709487 |
+|   2 |     -477.646  |                      1.96051   |
+|   3 |     -298.242  |                      1.06667   |
+|   4 |     -216.927  |                      0.950077  |
+|   5 |     -170.471  |                      1.73738   |
+|   6 |     -140.408  |                      1.30686   |
+|   7 |     -119.36   |                      0.006644  |
+|   8 |     -103.8    |                      0.959427  |
+|   9 |      -91.8295 |                      0.769766  |
+|  10 |      -82.3346 |                      1.7921    |
+|  11 |      -74.6192 |                      0.247974  |
+|  12 |      -68.226  |                      0.283005  |
+|  13 |      -62.8418 |                      1.99683   |
+|  14 |      -58.2453 |                      1.45994   |
+|  15 |      -54.2754 |                      0.723603  |
+|  16 |      -50.8121 |                      1.82599   |
+|  17 |      -47.7643 |                      0.796156  |
+|  18 |      -45.0622 |                      1.65626   |
+|  19 |      -42.6434 |                      0.426199  |
+|  20 |      -40.498  |                      1.10909   |
+
+[ a^2 theory (d_1 = 0) ]
+
+ Optimization algorithm
+
+ objective = 5.836308521187134e-26, best parameters for a = 0.1: c_0 = -139.93892856397218  (d_1 = 0)
+
+ Solving Schroedinger equation
+convergence achieved at iter #    9, de =   1.02248484e-11
+convergence achieved at iter #   13, de =  -2.98729701e-13
+convergence achieved at iter #   15, de =   1.58774955e-13
+convergence achieved at iter #   16, de =   4.02627941e-14
+convergence achieved at iter #   15, de =   2.50223516e-11
+convergence achieved at iter #   17, de =  -1.23982140e-15
+convergence achieved at iter #   15, de =   5.53496634e-11
+convergence achieved at iter #   20, de =   1.92473546e-12
+convergence achieved at iter #   18, de =   9.80372058e-14
+convergence achieved at iter #   20, de =   5.55867443e-14
+convergence achieved at iter #   18, de =   2.80158286e-12
+convergence achieved at iter #   19, de =   7.90732022e-13
+convergence achieved at iter #   21, de =   4.40421841e-14
+convergence achieved at iter #   23, de =  -5.29137261e-17
+convergence achieved at iter #   22, de =   1.11427346e-15
+convergence achieved at iter #   20, de =   4.78560876e-11
+convergence achieved at iter #   18, de =   1.60390692e-12
+convergence achieved at iter #   19, de =   5.99026663e-11
+convergence achieved at iter #   26, de =   6.46815377e-12
+convergence achieved at iter #   24, de =   1.13259954e-14
+-----------------------------------------------
+
+eff_a_2/a01 energy eigenvalues
+
+|   n |           E |
+|----:|------------:|
+|   1 | -2.42158    |
+|   2 | -0.359652   |
+|   3 | -0.140257   |
+|   4 | -0.0742058  |
+|   5 | -0.0458269  |
+|   6 | -0.0310888  |
+|   7 | -0.0224667  |
+|   8 | -0.016991   |
+|   9 | -0.0132981  |
+|  10 | -0.0106903  |
+|  11 | -0.00878064 |
+|  12 | -0.00734048 |
+|  13 | -0.00622763 |
+|  14 | -0.00534992 |
+|  15 | -0.00464549 |
+|  16 | -0.00407156 |
+|  17 | -0.00359777 |
+|  18 | -0.00320211 |
+|  19 | -0.00286831 |
+|  20 | -0.00258408 |
+-----------------------------------------------
+
+eff_a_2/a01 phase shifts at r = 800
+
+|   n |   phase shift |   phase shift mod 2π (π units) |
+|----:|--------------:|-------------------------------:|
+|   1 |    -1239.19   |                     1.55479    |
+|   2 |     -477.56   |                     1.98784    |
+|   3 |     -298.229  |                     1.07073    |
+|   4 |     -216.923  |                     0.951189   |
+|   5 |     -170.47   |                     1.73779    |
+|   6 |     -140.407  |                     1.30705    |
+|   7 |     -119.359  |                     0.00673722 |
+|   8 |     -103.8    |                     0.959478   |
+|   9 |      -91.8294 |                     0.769796   |
+|  10 |      -82.3345 |                     1.79212    |
+|  11 |      -74.6192 |                     0.247985   |
+|  12 |      -68.2259 |                     0.283012   |
+|  13 |      -62.8418 |                     1.99684    |
+|  14 |      -58.2453 |                     1.45995    |
+|  15 |      -54.2754 |                     0.723605   |
+|  16 |      -50.8121 |                     1.826      |
+|  17 |      -47.7643 |                     0.796156   |
+|  18 |      -45.0622 |                     1.65626    |
+|  19 |      -42.6434 |                     0.426199   |
+|  20 |      -40.498  |                     1.10909    |

@@ -44,6 +44,7 @@ To use the default values run simply:
 ```bash
 $ python code.py 
 ```
+All the lenghts are expressed in atomic units. The value $x_0 = -8$ corresponds to a minimun radius $r_{min} = 3 x 10^{-4} a_0, with $a_0$ the Bohr radius.
 Notice that, in order to obtain convergent results in **`code.py`**, not all combinations of paramter values are valid. For instance, the maximum eigenvalue index $n_{max}$ is related to the maximum radius $r_{max}$, such that the outermost node of the wavefunction lies within within $r_{max}$.
 
 
